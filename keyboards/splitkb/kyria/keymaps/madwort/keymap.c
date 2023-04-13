@@ -413,3 +413,47 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 }
 #endif
 
+void keyboard_pre_init_user(void) {
+  // Set our LED pin as output
+  setPinOutput(24);
+  // Turn the LED off
+  // (Due to technical reasons, high is off and low is on)
+  writePinHigh(24);
+}
+
+void keyboard_post_init_user(void) {
+    // Initialize RGB to static black
+    rgblight_enable_noeeprom();
+    rgblight_sethsv_noeeprom(HSV_BLACK);
+    rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
+}
+
+void housekeeping_task_user(void) {
+    switch (get_highest_layer(layer_state|default_layer_state)) {
+        case _QWERTY:
+            rgblight_setrgb_at(RGB_OFF, 0);
+            break;
+        case _DVORAK:
+            // pale orange
+            rgblight_setrgb_at(0x10, 0x08, 0x00, 0);
+            break;
+        case _NAV:
+            // pale yellow
+            rgblight_setrgb_at(0x10, 0x10, 0x00, 0);
+            break;
+        case _SYM:
+            rgblight_setrgb_at(RGB_RED, 0);
+            break;
+        case _NAVSYM:
+            // pale green
+            rgblight_setrgb_at(0x00, 0x10, 0x00, 0);
+            break;
+        case _FUNCTION:
+            rgblight_setrgb_at(RGB_WHITE, 0);
+            break;
+        case _ADJUST:
+            // pale purple
+            rgblight_setrgb_at(0x08, 0x00, 0x10, 0);
+            break;
+    }
+}

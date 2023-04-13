@@ -16,6 +16,12 @@
 
 #pragma once
 
+#ifdef OLED_ENABLE
+#    define OLED_TIMEOUT 300000
+#    define OLED_UPDATE_INTERVAL 50
+#    define OLED_DISPLAY_CLOCK 0xf0
+#endif
+
 #ifdef RGBLIGHT_ENABLE
 #    define RGBLIGHT_EFFECT_BREATHING
 #    define RGBLIGHT_EFFECT_RAINBOW_MOOD
@@ -37,3 +43,13 @@
 
 // Lets you roll mod-tap keys
 #define IGNORE_MOD_TAP_INTERRUPT
+
+#undef RGB_DI_PIN
+#define RGB_DI_PIN 25
+#undef RGBLED_NUM
+#define RGBLED_NUM 2
+#undef RGBLED_SPLIT
+#define RGBLED_SPLIT {1, 1}
+
+#define ENCODER_RESOLUTION 2
+#define ENCODER_RESOLUTION_RIGHT 4
