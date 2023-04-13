@@ -317,6 +317,8 @@ bool oled_init(oled_rotation_t rotation) {
 #else
         DISPLAY_START_LINE | 0x00,
 #endif
+        VCOM_DETECT,
+        OLED_VCOM_DETECT,
         CHARGE_PUMP,
         0x14,
 #if OLED_IC_HAS_HORIZONTAL_MODE
