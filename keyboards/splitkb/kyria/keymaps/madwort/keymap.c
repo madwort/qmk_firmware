@@ -370,11 +370,17 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
           case _DVORAK:
           case _NAV:
           case _SYM:
-              // Page up/Page down
+              // // Page up/Page down
+              // if (clockwise) {
+              //     tap_code(KC_PGDN);
+              // } else {
+              //     tap_code(KC_PGUP);
+              // }
+              // Mouse wheel up/down
               if (clockwise) {
-                  tap_code(KC_PGDN);
+                  tap_code(KC_MS_WH_DOWN);
               } else {
-                  tap_code(KC_PGUP);
+                  tap_code(KC_MS_WH_UP);
               }
               break;
           case _NAVSYM:

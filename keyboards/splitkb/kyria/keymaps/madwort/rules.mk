@@ -6,3 +6,4 @@ RGB_MATRIX_ENABLE = no     # Disable keyboard RGB matrix, as it is enabled by de
 # CONVERT_TO=promicro_rp2040 # Liatris chip
 RGBLIGHT_ENABLE = yes # Enables QMK's RGB code
 WS2812_DRIVER = vendor # Use the RP2040's PIO interface
+MOUSEKEY_ENABLE = yes
