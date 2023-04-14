@@ -19,7 +19,6 @@ enum layers {
     _QWERTY = 0,
     _DVORAK,
     _NAV,
-    _SYM,
     _NAVSYM,
     _FUNCTION,
     _ADJUST,
@@ -31,7 +30,6 @@ enum layers {
 #define DVORAK   DF(_DVORAK)
 #define DF_NAV   DF(_NAV)
 
-#define SYM      MO(_SYM)
 #define NAV      MO(_NAV)
 #define NAVSYM   MO(_NAVSYM)
 #define FKEYS    MO(_FUNCTION)
@@ -71,7 +69,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /*
  * Base Layer: Dvorak (for OS QWERTY)
- *
+ * TODO: check this for bugs!
  * ,-------------------------------------------.                              ,-------------------------------------------.
  * |  Tab   | ' "  | , <  | . >  |   P  |   Y  |                              |   F  |   G  |   C  |   R  |   L  |  Bksp  |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
@@ -87,7 +85,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_TAB  ,KC_QUOTE,KC_COMM,  KC_DOT,   KC_P ,   KC_Y ,                                        KC_F,   KC_G ,  KC_C ,   KC_R ,  KC_L , KC_BSPC,
      CTL_ESC , KC_A ,  KC_O   ,  KC_E  ,   KC_U ,   KC_I ,                                        KC_D,   KC_H ,  KC_T ,   KC_N ,  KC_S , KC_ENTER,
      KC_ESCAPE ,KC_LSFT, KC_Q   ,  KC_J  ,   KC_K ,   KC_X , KC_GRAVE,_______,     KC_MUTE , KC_BACKSLASH, KC_B,   KC_M ,  KC_W ,   KC_V ,  KC_Z , KC_RSFT,
-                                 KC_SCLN, ADJUST, KC_LGUI, KC_BSPC , KC_LEFT_CTRL,     SYM    , KC_SPC ,KC_RALT, KC_SLSH, KC_MINS
+                                 KC_SCLN, ADJUST, KC_LGUI, KC_BSPC , KC_LEFT_CTRL,     KC_LALT  , KC_SPC , NAVSYM, KC_SLSH, KC_MINS
     ),
 
 /*
@@ -109,27 +107,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, _______,                                     KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_VOLD, KC_MPLY,
       _______, _______, _______, _______, _______, _______, _______, KC_SCRL, _______, _______,KC_PAUSE, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, KC_PSCR,
                                  _______, _______, _______, _______, _______, _______, _______,  QWERTY, _______, _______
-    ),
-
-/*
- * Sym Layer: Numbers and symbols
- *
- * ,-------------------------------------------.                              ,-------------------------------------------.
- * |    `   |  1   |  2   |  3   |  4   |  5   |                              |   6  |  7   |  8   |  9   |  0   |   =    |
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |    ~   |  !   |  @   |  #   |  $   |  %   |                              |   ^  |  &   |  *   |  (   |  )   |   +    |
- * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |    |   |   \  |  :   |  ;   |  -   |  [   |  {   |      |  |      |   }  |   ]  |  _   |  ,   |  .   |  /   |   ?    |
- * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        |      |      |      |      |      |  |      |      |      |      |      |
- *                        |      |      |      |      |      |  |      |      |      |      |      |
- *                        `----------------------------------'  `----------------------------------'
- */
-    [_SYM] = LAYOUT(
-      KC_GRV ,   KC_1 ,   KC_2 ,   KC_3 ,   KC_4 ,   KC_5 ,                                       KC_6 ,   KC_7 ,   KC_8 ,   KC_9 ,   KC_0 , KC_EQL ,
-     KC_TILD , KC_EXLM,  KC_AT , KC_HASH,  KC_DLR, KC_PERC,                                     KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_PLUS,
-     KC_PIPE , KC_BSLS, KC_COLN, KC_SCLN, KC_MINS, KC_LBRC, KC_LCBR, _______, _______, KC_RCBR, KC_RBRC, KC_UNDS, KC_COMM,  KC_DOT, KC_SLSH, KC_QUES,
-                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
 /*
@@ -252,9 +229,6 @@ bool oled_task_user(void) {
             case _NAV:
                 oled_write_P(PSTR("Nav\n"), false);
                 break;
-            case _SYM:
-                oled_write_P(PSTR("Sym\n"), false);
-                break;
             case _NAVSYM:
                 oled_write_P(PSTR("NavSym\n"), false);
                 break;
@@ -369,7 +343,6 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
           case _ADJUST:
           case _DVORAK:
           case _NAV:
-          case _SYM:
               // // Page up/Page down
               // if (clockwise) {
               //     tap_code(KC_PGDN);
@@ -398,7 +371,6 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
             case _ADJUST:
             case _DVORAK:
             case _NAV:
-            case _SYM:
                 // Volume control
                 if (clockwise) {
                     tap_code(KC_VOLU);
@@ -446,9 +418,6 @@ void housekeeping_task_user(void) {
         case _NAV:
             // pale yellow
             rgblight_setrgb_at(0x10, 0x10, 0x00, 0);
-            break;
-        case _SYM:
-            rgblight_setrgb_at(RGB_RED, 0);
             break;
         case _NAVSYM:
             // pale green

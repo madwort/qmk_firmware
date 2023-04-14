@@ -87,31 +87,6 @@ Useful mnemonics:
 - <kbd>Media Previous</kbd> = ⏮, <kbd>Media Next</kbd> = ⏭
 - <kbd>Page Up</kbd>, <kbd>Page Down</kbd> and <kbd>Volume Up</kbd>, <kbd>Volume Down</kbd> are positioned like the main <kbd>Up</kbd> and <kbd>Down</kbd> keys.
 
-## Sym layer
-```
-Sym Layer: Numbers, symbols
-                                                                                                                         
-,-------------------------------------------.                              ,-------------------------------------------.
-|    `   |  1   |  2   |  3   |  4   |  5   |                              |   6  |  7   |  8   |  9   |  0   |   =    |
-|--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
-|    ~   |  !   |  @   |  #   |  $   |  %   |                              |   ^  |  &   |  *   |  (   |  )   |   +    |
-|--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
-|    |   |   \  |  :   |  ;   |  -   |  [   |  {   |      |  |      |   }  |   ]  |  _   |  ,   |  .   |  /   |   ?    |
-`----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
-                       |      |      |      |      |      |  |      |      |      |      |      |
-                       |      |      |      |      |      |  |      |      |      |      |      |
-                       `----------------------------------'  `----------------------------------'
-```
-The top row is the unshifted num row, the home row of the layer is the shifted num row and the bottom row contains the hyphen `-` and the underscore `_` on the best lower row spot because of how frequent they are as well as redundant symbols that are already present on the base layer but are reproduced here to avoid juggling back and forth between base, shift, and sym when typing a string of symbols.
-
-The layout of the first two rows needs no introduction, you're already used to them but it's worth looking into the structure of the bottom row.
-
-The two halves are mirrored in a sense. On the right, you can find <kbd>,</kbd> <kbd>.</kbd> <kbd>/</kbd> at their usual spots with the addition of <kbd>Shift</kbd>+<kbd>/</kbd>=<kbd>?</kbd> to the right of the <kbd>/</kbd> key to remove the need to press simultaneously <kbd>Sym</kbd> and a <kbd>Shift</kbd> key to access `?`. 
-
-Now, if you look at the left side, you'll notice that the mirror of <kbd>,</kbd> is <kbd>;</kbd>, the mirror of <kbd>.</kbd> is <kbd>:</kbd> and the mirror of <kbd>/</kbd> is <kbd>\\</kbd>. The same logic used for <kbd>Shift</kbd>+<kbd>/</kbd>=<kbd>?</kbd> also applies to <kbd>Shift</kbd>+<kbd>\\</kbd>=<kbd>|</kbd>.
-
-In case you wish to combine <kbd>Shift</kbd> with a symbol key anyways, you can hold down <kbd>Shift</kbd> on the base layer with your pinky, activate <kbd>Sym</kbd> with your right thumb and while still holding down the <kbd>Shift</kbd> key, tap your desired symbol key. Same thing if you need <kbd>Ctrl</kbd>+<kbd>Digit</kbd>.
-
 ## Function layer
 ```
 Function Layer: Function keys
@@ -160,7 +135,6 @@ enum layers {
     _DVORAK = 0,
     _QWERTY,
     _NAV,
-    _SYM,
     _NAVSYM,
     _FUNCTION,
     _ADJUST
