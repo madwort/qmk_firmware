@@ -1,0 +1,32 @@
+{
+    "manufacturer": "Tom Ward",
+    "keyboard_name": "isopad",
+    "maintainer": "madwort",
+    "bootloader": "atmel-dfu",
+    "diode_direction": "COL2ROW",
+    "features": {
+        "bootmagic": true,
+        "command": false,
+        "console": false,
+        "extrakey": true,
+        "mousekey": false,
+        "nkro": false
+    },
+    "matrix_pins": {
+        "direct": [["F4"]]
+    },
+    "processor": "atmega32u4",
+    "url": "",
+    "usb": {
+        "device_version": "1.0.0",
+        "pid": "0x0012",
+        "vid": "0xA104"
+    },
+    "layouts": {
+        "LAYOUT": {
+            "layout": [
+                { "matrix": [0, 0], "x": 0, "y": 0 }
+            ]
+        }
+    }
+}
