@@ -14,6 +14,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include QMK_KEYBOARD_H
+#include "raw_hid.h"
+
+
+// Assume Dvorak layout for any use of SEND_STRING
+#include "sendstring_dvorak.h"
 
 enum layers {
     _QWERTY = 0,
@@ -22,8 +27,12 @@ enum layers {
     _NAVSYM,
     _FUNCTION,
     _ADJUST,
+    _MOUSEKE,
 };
 
+enum madwort_keycodes {
+  SS_HELLO = SAFE_RANGE,
+};
 
 // Aliases for readability
 #define QWERTY   DF(_QWERTY)
@@ -34,6 +43,8 @@ enum layers {
 #define NAVSYM   MO(_NAVSYM)
 #define FKEYS    MO(_FUNCTION)
 #define ADJUST   MO(_ADJUST)
+// TODO: better name for MOUSEKE!!
+#define MOUSEKE   MO(_MOUSEKE)
 
 #define CTL_ESC  MT(MOD_LCTL, KC_ESC)
 #define CTL_QUOT MT(MOD_RCTL, KC_QUOTE)
@@ -92,20 +103,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Nav Layer: Media, navigation
  * TODO: not sure about the QWERTY move here!
  * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        |      |      |      |      |      |                              | PgUp | Home |   ↑  | End  | VolUp| Delete |
+ * | M Play |      |      |   ↑  |      |      |                              | PgUp | Home |   ↑  | End  | VolUp| Delete |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |        |  GUI |  Alt | Ctrl | Shift|      |                              | PgDn |  ←   |   ↓  |   →  | VolDn| M Play |
+ * | CapsLk |      |  ←   |   ↓  |   →  |      |                              | PgDn |  ←   |   ↓  |   →  | VolDn| M Play |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |        |      |      |      |      |      |      |ScLck |  |      |      | Pause|M Prev|M Play|M Next|VolMut| PrtSc  |
+ * |        |  GUI |  Alt | Ctrl | Shift|      |      |ScLck |  |      |      | Pause|M Prev|M Play|M Next|VolMut| PrtSc  |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
  *                        |      |      |      |      |      |  |      |      | QWERTY|      |      |
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
     [_NAV] = LAYOUT(
-      _______, _______, _______, _______, _______, _______,                                     KC_PGUP, KC_HOME, KC_UP,   KC_END,  KC_VOLU, KC_DEL,
-      _______, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, _______,                                     KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_VOLD, KC_MPLY,
-      _______, _______, _______, _______, _______, _______, _______, KC_SCRL, _______, _______,KC_PAUSE, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, KC_PSCR,
+      KC_MPLY, _______, _______, KC_UP  , _______, _______,                                     KC_PGUP, KC_HOME, KC_UP,   KC_END,  KC_VOLU, KC_DEL,
+      KC_CAPS, _______, KC_LEFT, KC_DOWN, KC_RGHT, _______,                                     KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_VOLD, KC_MPLY,
+      _______, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, _______, _______, KC_SCRL, _______, _______,KC_PAUSE, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, KC_PSCR,
                                  _______, _______, _______, _______, _______, _______, _______,  QWERTY, _______, _______
     ),
 
@@ -115,7 +126,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * NB. THIS IS INTENDED OUTPUT, NOT CHAR CODES!
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
- * |    `   |  !   |  @   |   ↑  |   $  |      |                              | PgUp |  7   |  8   |  9   |  Del |        |
+ * |    `   |  !   |  @   |   ↑  |   $  |  Hi  |                              | PgUp |  7   |  8   |  9   |  Del |        |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |    ~   |  (   |  ←   |   ↓  |   →  |  )   |                              | PgDn |  4   |  5   |  6   |  Tab |   =    |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
@@ -125,7 +136,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
     [_NAVSYM] = LAYOUT(
-      KC_GRV , KC_EXLM, KC_AT  ,  KC_UP ,   KC_DLR,   _______,                                     KC_PGUP,   KC_7 ,  KC_8 , KC_9, KC_DEL, _______,
+      KC_GRV , KC_EXLM, KC_AT  ,  KC_UP ,   KC_DLR,   SS_HELLO,                                     KC_PGUP,   KC_7 ,  KC_8 , KC_9, KC_DEL, _______,
      KC_TILD , KC_LPRN, KC_LEFT, KC_DOWN, KC_RGHT,  KC_RPRN,                                     KC_PGDN,   KC_4 ,  KC_5 , KC_6, KC_TAB, KC_RBRC,
       DF_NAV , _______, KC_LCBR, KC_HASH, KC_MINS, KC_EQUAL, KC_CIRC, _______, _______, KC_AMPR, KC_ASTR,   KC_1 ,  KC_2 , KC_3, KC_RCBR, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______,  KC_PDOT, KC_0
@@ -160,18 +171,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |        |      |      |Dvorak|      |      |                              | TOG  | SAI  | HUI  | VAI  | MOD  |        |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |        |      |      |  NAV |      |      |      |      |  |      |      |      | SAD  | HUD  | VAD  | RMOD |        |
+ * |  NAV   |      |      |  NAV |      |      |      |      |  |      |      |      | SAD  | HUD  | VAD  | RMOD |        |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
     [_ADJUST] = LAYOUT(
-      _______, _______, _______, QWERTY , _______, _______,                                    _______, _______, _______, _______,  _______, _______,
+      _______, _______, MOUSEKE, QWERTY , _______, _______,                                    _______, _______, _______, _______,  _______, _______,
       _______, _______, _______, DVORAK , _______, _______,                                    RGB_TOG, RGB_SAI, RGB_HUI, RGB_VAI,  RGB_MOD, _______,
-      _______, _______, _______, DF_NAV , _______, _______,_______, _______, _______, _______, _______, RGB_SAD, RGB_HUD, RGB_VAD, RGB_RMOD, _______,
+       DF_NAV, _______, _______, DF_NAV , _______, _______,_______, _______, _______, _______, _______, RGB_SAD, RGB_HUD, RGB_VAD, RGB_RMOD, _______,
                                  _______, _______, _______,_______, _______, _______, _______, _______, _______, _______
     ),
+
+
+  [_MOUSEKE] = LAYOUT(
+    _______, _______, MOUSEKE, _______ , _______, _______,                                    _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, _______ , _______, _______,                                    _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, _______ , _______, _______,_______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+                               _______, _______, _______,_______, KC_MS_BTN2, KC_MS_BTN1, _______, NAVSYM, _______, _______
+  ),
+
+
+
+
 
 // /*
 //  * Layer template
@@ -204,6 +227,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #ifdef OLED_ENABLE
 oled_rotation_t oled_init_user(oled_rotation_t rotation) { return OLED_ROTATION_180; }
 
+char hidoutput[16] = "";
+
 bool oled_task_user(void) {
     if (is_keyboard_master()) {
         // QMK Logo and version information
@@ -215,7 +240,7 @@ bool oled_task_user(void) {
         // clang-format on
 
         oled_write_P(qmk_logo, false);
-        oled_write_P(PSTR("Kyria rev1.0\n\n"), false);
+        // oled_write_P(PSTR("Kyria rev1.0\n\n"), false);
 
         // Host Keyboard Layer Status
         oled_write_P(PSTR("Layer: "), false);
@@ -238,6 +263,9 @@ bool oled_task_user(void) {
             case _ADJUST:
                 oled_write_P(PSTR("Adjust\n"), false);
                 break;
+            case _MOUSEKE:
+                oled_write_P(PSTR("Mouse\n"), false);
+                break;
             default:
                 oled_write_P(PSTR("Undefined\n"), false);
         }
@@ -247,6 +275,9 @@ bool oled_task_user(void) {
         oled_write_P(led_usb_state.num_lock    ? PSTR("NUMLCK ") : PSTR("       "), false);
         oled_write_P(led_usb_state.caps_lock   ? PSTR("CAPLCK ") : PSTR("       "), false);
         oled_write_P(led_usb_state.scroll_lock ? PSTR("SCRLCK ") : PSTR("       "), false);
+        // maybe truncate hidoutput to oled_max_chars()
+        oled_write(hidoutput, false);
+
     } else {
         // clang-format off
         // static const char PROGMEM kyria_logo[] = {
@@ -342,7 +373,6 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
       switch (get_highest_layer(layer_state|default_layer_state)) {
           case _QWERTY:
           case _FUNCTION:
-          case _ADJUST:
           case _DVORAK:
           case _NAV:
               // // Page up/Page down
@@ -359,10 +389,24 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
               }
               break;
           case _NAVSYM:
-          if (clockwise) {
+              if (clockwise) {
                   tap_code16(LALT(KC_RIGHT));
               } else {
                   tap_code16(LALT(KC_LEFT));
+              }
+              break;
+          case _ADJUST:
+              if (clockwise) {
+                  tap_code16(LCTL(KC_RIGHT));
+              } else {
+                  tap_code16(LCTL(KC_LEFT));
+              }
+              break;
+          case _MOUSEKE:
+              if (clockwise) {
+                  tap_code(KC_MS_RIGHT);
+              } else {
+                  tap_code(KC_MS_LEFT);
               }
               break;
       }
@@ -387,6 +431,14 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                     tap_code(KC_BRIGHTNESS_DOWN);
                 }
                 break;
+            case _MOUSEKE:
+                if (clockwise) {
+                    tap_code(KC_MS_UP);
+                } else {
+                    tap_code(KC_MS_DOWN);
+                }
+                break;
+
         }
     }
     return false;
@@ -433,4 +485,32 @@ void housekeeping_task_user(void) {
             rgblight_setrgb_at(0x08, 0x00, 0x10, 0);
             break;
     }
+}
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case SS_HELLO:
+            if (record->event.pressed) {
+                SEND_STRING("Hello, world!\n");
+            }
+            return false;
+    }
+
+    return true;
+}
+
+void raw_hid_receive(uint8_t *data, uint8_t length) {
+  // works but flashes off again quickly
+  rgblight_setrgb_at(RGB_WHITE, 0);
+
+  // copy data to this var which gets output to the screen
+  // this appears to be intermittently unreliable
+  // buffer should be 32
+  // TODO ensure this doesn't read beyond the end of the buffer?!?!?!
+  memcpy(hidoutput, data, 32);
+
+  //  doesn't work - maybe needs some kind of split sync
+  // rgblight_setrgb_at(RGB_WHITE, 1);
+
+  // raw_hid_send(data, length);
 }
