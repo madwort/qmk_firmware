@@ -25,6 +25,7 @@ enum layers {
     _DVORAK,
     _NAV,
     _NAVSYM,
+    _NAVSYMR,
     _FUNCTION,
     _ADJUST,
     _MOUSEKE,
@@ -38,6 +39,7 @@ enum madwort_keycodes {
 #define QWERTY   DF(_QWERTY)
 #define DVORAK   DF(_DVORAK)
 #define DF_NAV   DF(_NAV)
+#define NAVSYMR  DF(_NAVSYMR)
 
 #define NAV      MO(_NAV)
 #define NAVSYM   MO(_NAVSYM)
@@ -136,10 +138,35 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
     [_NAVSYM] = LAYOUT(
-      KC_GRV , KC_EXLM, KC_AT  ,  KC_UP ,   KC_DLR,   SS_HELLO,                                     KC_PGUP,   KC_7 ,  KC_8 , KC_9, KC_DEL, _______,
+      KC_GRV , KC_EXLM, KC_AT  ,  KC_UP ,   KC_DLR,   SS_HELLO,                                  KC_PGUP,   KC_7 ,  KC_8 , KC_9, KC_DEL, _______,
      KC_TILD , KC_LPRN, KC_LEFT, KC_DOWN, KC_RGHT,  KC_RPRN,                                     KC_PGDN,   KC_4 ,  KC_5 , KC_6, KC_TAB, KC_RBRC,
       DF_NAV , _______, KC_LCBR, KC_HASH, KC_MINS, KC_EQUAL, KC_CIRC, _______, _______, KC_AMPR, KC_ASTR,   KC_1 ,  KC_2 , KC_3, KC_RCBR, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______,  KC_PDOT, KC_0
+    ),
+
+/*
+ * NavSymR Layer: Arrows on the right hand!
+ *
+ * NB. THIS IS INTENDED OUTPUT, NOT CHAR CODES!
+ * TODO: maybe put the arrow keys on *both* sides?
+ * TODO: fix the mousewheel scroll encoder for this layout 
+ *
+ * ,-------------------------------------------.                              ,-------------------------------------------.
+ * |        |      |      |      |      |      |                              | PgUp |      |   ↑  |      |      |        |
+ * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
+ * |        |      |      |      |      |      |                              | PgDn |  ←   |   ↓  |   →  |      |        |
+ * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
+ * |        |      |      |      |      |      |      |      |  |      |      |      |      |      |      |      |        |
+ * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
+ *                        |      |      |      |      |      |  |      |      |      |      |      |
+ *                        |      |      |      |      |      |  |      |      |      |      |      |
+ *                        `----------------------------------'  `----------------------------------'
+ */
+    [_NAVSYMR] = LAYOUT(
+      _______, _______, _______, _______, _______, _______,                                     KC_PGUP, _______, KC_UP  , _______, _______, _______,
+      _______, _______, _______, _______, _______, _______,                                     KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______,
+      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
 /*
@@ -167,7 +194,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Adjust Layer: Default layer settings, RGB
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        |      |      |QWERTY|      |      |                              |      |      |      |      |      |        |
+ * |        |      |MOUSKE|QWERTY|NAVSYMR|      |                              |      |      |      |      |      |        |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |        |      |      |Dvorak|      |      |                              | TOG  | SAI  | HUI  | VAI  | MOD  |        |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
@@ -178,7 +205,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
     [_ADJUST] = LAYOUT(
-      _______, _______, MOUSEKE, QWERTY , _______, _______,                                    _______, _______, _______, _______,  _______, _______,
+      _______, _______, MOUSEKE, QWERTY , NAVSYMR, _______,                                    _______, _______, _______, _______,  _______, _______,
       _______, _______, _______, DVORAK , _______, _______,                                    RGB_TOG, RGB_SAI, RGB_HUI, RGB_VAI,  RGB_MOD, _______,
        DF_NAV, _______, _______, DF_NAV , _______, _______,_______, _______, _______, _______, _______, RGB_SAD, RGB_HUD, RGB_VAD, RGB_RMOD, _______,
                                  _______, _______, _______,_______, _______, _______, _______, _______, _______, _______
@@ -256,6 +283,9 @@ bool oled_task_user(void) {
                 break;
             case _NAVSYM:
                 oled_write_P(PSTR("NavSym\n"), false);
+                break;
+            case _NAVSYMR:
+                oled_write_P(PSTR("NavSym RHS\n"), false);
                 break;
             case _FUNCTION:
                 oled_write_P(PSTR("Function\n"), false);
@@ -476,6 +506,10 @@ void housekeeping_task_user(void) {
         case _NAVSYM:
             // pale green
             rgblight_setrgb_at(0x00, 0x10, 0x00, 0);
+            break;
+        case _NAVSYMR:
+            // pale red
+            rgblight_setrgb_at(0x08, 0x00, 0x00, 0);
             break;
         case _FUNCTION:
             rgblight_setrgb_at(RGB_WHITE, 0);
