@@ -40,13 +40,13 @@ enum madwort_keycodes {
 #define DVORAK   DF(_DVORAK)
 #define DF_NAV   DF(_NAV)
 #define NAVSYMR  DF(_NAVSYMR)
+// TODO: better name for MOUSEKE!!
+#define MOUSEKE  DF(_MOUSEKE)
 
 #define NAV      MO(_NAV)
 #define NAVSYM   MO(_NAVSYM)
 #define FKEYS    MO(_FUNCTION)
 #define ADJUST   MO(_ADJUST)
-// TODO: better name for MOUSEKE!!
-#define MOUSEKE   MO(_MOUSEKE)
 
 #define CTL_ESC  MT(MOD_LCTL, KC_ESC)
 #define CTL_QUOT MT(MOD_RCTL, KC_QUOTE)
