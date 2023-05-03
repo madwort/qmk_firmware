@@ -1,6 +1,6 @@
 {
   "name": "isopad",
-  "vendorId": "0xa104",
+  "vendorId": "0xa103",
   "productId": "0x0012",
   "matrix": {"rows": 1, "cols": 1},
   "layouts": {
