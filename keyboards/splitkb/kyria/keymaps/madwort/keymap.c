@@ -444,16 +444,24 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
         switch (get_highest_layer(layer_state|default_layer_state)) {
             case _QWERTY:
             case _FUNCTION:
-            case _ADJUST:
             case _DVORAK:
             case _NAV:
-                // Volume control
+                // System Volume control
                 if (clockwise) {
                     tap_code(KC_VOLU);
                 } else {
                     tap_code(KC_VOLD);
                 }
                 break;
+            case _ADJUST:
+              // Swinsian Volume control
+              // nb. this is buggy
+              if (clockwise) {
+                  tap_code16(LCAG(KC_I));
+              } else {
+                  tap_code16(LCAG(KC_D));
+              }
+              break;
             case _NAVSYM:
             if (clockwise) {
                     tap_code(KC_BRIGHTNESS_UP);
