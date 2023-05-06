@@ -1,6 +1,6 @@
 # Madwort's Kyria Keymap
 
-## Concept
+## Context / Background / Concept
 
 I want to use a Kyria for home & a Keyboardio Atreus for travel, as I've been using the Atreus for a while & I'm generally very happy with it, I just get a little finger pain after extended sessions. I already have a [layout for Atreus](https://github.com/madwort/atreus-layout/) that I'm happy with, so this layout attempts to port that layout to the Kyria and then extend it with the extra features (LEDs, encoders, etc).
 
