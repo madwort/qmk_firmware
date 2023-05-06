@@ -393,9 +393,9 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
       switch (get_highest_layer(layer_state|default_layer_state)) {
           case _NAVSYM:
               if (clockwise) {
-                  tap_code16(LALT(KC_RIGHT));
+                  tap_code16(LAG(KC_RIGHT));
               } else {
-                  tap_code16(LALT(KC_LEFT));
+                  tap_code16(LAG(KC_LEFT));
               }
               break;
           case _ADJUST:
