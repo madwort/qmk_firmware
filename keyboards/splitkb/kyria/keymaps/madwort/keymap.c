@@ -21,8 +21,8 @@
 #include "sendstring_dvorak.h"
 
 enum layers {
-    _QWERTY = 0,
-    _DVORAK,
+    _OSDVORAK = 0,
+    _KEYBDVORAK,
     _NAV,
     _NAVSYM,
     _NAVSYMR,
@@ -36,8 +36,8 @@ enum madwort_keycodes {
 };
 
 // Aliases for readability
-#define QWERTY   DF(_QWERTY)
-#define DVORAK   DF(_DVORAK)
+#define OSDVORAK   DF(_OSDVORAK)
+#define DVORAK   DF(_KEYBDVORAK)
 #define DF_NAV   DF(_NAV)
 #define NAVSYMR  DF(_NAVSYMR)
 // TODO: better name for MOUSEKE!!
@@ -60,7 +60,7 @@ enum madwort_keycodes {
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /*
- * Base Layer: QWERTY (for OS Dvorak)
+ * Base Layer: OS Dvorak
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
  * |  Tab   |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |  Bksp  |
@@ -73,7 +73,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
-    [_QWERTY] = LAYOUT(
+    [_OSDVORAK] = LAYOUT(
      KC_TAB,    KC_Q,    KC_W,  KC_E, KC_R,   KC_T,                                     KC_Y,   KC_U ,  KC_I ,   KC_O ,  KC_P , KC_BSPC,
      KC_GRAVE,  KC_A,    KC_S,  KC_D, KC_F,   KC_G,                                     KC_H,   KC_J ,  KC_K ,   KC_L ,KC_SCLN, KC_ENTER,
      KC_ESCAPE, KC_LSFT, KC_X,  KC_C, KC_V,   KC_B,    KC_GRAVE, _______     , KC_MUTE, KC_BACKSLASH, KC_N,   KC_M ,KC_COMM, KC_DOT ,KC_SLSH, KC_RSFT,
@@ -81,7 +81,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
 /*
- * Base Layer: Dvorak (for OS QWERTY)
+ * Base Layer: Keyboard Dvorak
  * TODO: check this for bugs!
  * ,-------------------------------------------.                              ,-------------------------------------------.
  * |  Tab   | ' "  | , <  | . >  |   P  |   Y  |                              |   F  |   G  |   C  |   R  |   L  |  Bksp  |
@@ -94,7 +94,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
-    [_DVORAK] = LAYOUT(
+    [_KEYBDVORAK] = LAYOUT(
      KC_TAB  ,KC_QUOTE,KC_COMM,  KC_DOT,   KC_P ,   KC_Y ,                                        KC_F,   KC_G ,  KC_C ,   KC_R ,  KC_L , KC_BSPC,
      CTL_ESC , KC_A ,  KC_O   ,  KC_E  ,   KC_U ,   KC_I ,                                        KC_D,   KC_H ,  KC_T ,   KC_N ,  KC_S , KC_ENTER,
      KC_ESCAPE ,KC_LSFT, KC_Q   ,  KC_J  ,   KC_K ,   KC_X , KC_GRAVE,_______,     KC_MUTE , KC_BACKSLASH, KC_B,   KC_M ,  KC_W ,   KC_V ,  KC_Z , KC_RSFT,
@@ -103,7 +103,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /*
  * Nav Layer: Media, navigation
- * TODO: not sure about the QWERTY move here!
+ * TODO: not sure about the OSDVORAK move here!
  * ,-------------------------------------------.                              ,-------------------------------------------.
  * | M Play |      |      |   ↑  |      |      |                              | PgUp | Home |   ↑  | End  | VolUp| Delete |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
@@ -111,7 +111,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
  * |        |  GUI |  Alt | Ctrl | Shift|      |      |      |  |      |      |      |M Prev|      |M Next|VolMut| PrtSc  |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        |      |      |      |      |      |  |      |      |QWERTY|      |      |
+ *                        |      |      |      |      |      |  |      |      |OSDVORAK|      |      |
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
@@ -119,7 +119,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_MPLY, _______, _______, KC_UP  , _______, _______,                                     KC_PGUP, KC_HOME, KC_UP,   KC_END,  KC_VOLU, KC_DEL,
       KC_CAPS, _______, KC_LEFT, KC_DOWN, KC_RGHT, _______,                                     KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_VOLD, KC_MPLY,
       _______, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, _______, _______, _______, _______, _______,_______, KC_MPRV, _______, KC_MNXT, KC_MUTE, KC_PSCR,
-                                 _______, _______, _______, _______, _______, _______, _______,  QWERTY, _______, _______
+                                 _______, _______, _______, _______, _______, _______, _______,  OSDVORAK, _______, _______
     ),
 
 /*
@@ -215,7 +215,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Adjust Layer: Default layer settings, RGB
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        |      |MOUSKE|QWERTY|NAVSYMR|     |                              |      |      |      |      |      |        |
+ * |        |      |MOUSKE|OSDVORAK|NAVSYMR|     |                              |      |      |      |      |      |        |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |        |      |      |Dvorak|      |      |                              |      |OSInput+|      |      |      |        |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
@@ -226,7 +226,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
     [_ADJUST] = LAYOUT(
-      _______, _______, MOUSEKE, QWERTY , NAVSYMR, _______,                                    _______, _______, _______, _______,  _______, _______,
+      _______, _______, MOUSEKE, OSDVORAK , NAVSYMR, _______,                                    _______, _______, _______, _______,  _______, _______,
       _______, _______, _______, DVORAK , _______, _______,                                    _______, LCA(KC_SPC), _______, _______,  _______, _______,
        DF_NAV, _______, _______, DF_NAV , _______, _______,_______, _______, _______, _______, _______, LCTL(KC_SPC), _______, _______, _______, _______,
                                  _______, _______, _______,_______, _______, _______, _______, _______, _______, _______
@@ -283,11 +283,11 @@ bool oled_task_user(void) {
         // Host Keyboard Layer Status
         oled_write_P(PSTR("Layer: "), false);
         switch (get_highest_layer(layer_state|default_layer_state)) {
-            case _QWERTY:
+            case _OSDVORAK:
                 oled_write_P(PSTR("OS Dvorak\n"), false);
                 break;
-            case _DVORAK:
-                oled_write_P(PSTR("OS QWERTY\n"), false);
+            case _KEYBDVORAK:
+                oled_write_P(PSTR("Keyb Dvorak\n"), false);
                 break;
             case _NAV:
                 oled_write_P(PSTR("Nav\n"), false);
@@ -423,9 +423,9 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                   tap_code(KC_MS_LEFT);
               }
               break;
-          case _QWERTY:
+          case _OSDVORAK:
           case _FUNCTION:
-          case _DVORAK:
+          case _KEYBDVORAK:
           case _NAV:
           default:
               // // Page up/Page down
@@ -467,9 +467,9 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                     tap_code(KC_MS_DOWN);
                 }
                 break;
-            case _QWERTY:
+            case _OSDVORAK:
             case _FUNCTION:
-            case _DVORAK:
+            case _KEYBDVORAK:
             case _NAV:
             default:
                 // System Volume control
@@ -503,10 +503,10 @@ void keyboard_post_init_user(void) {
 
 void housekeeping_task_user(void) {
     switch (get_highest_layer(layer_state|default_layer_state)) {
-        case _QWERTY:
+        case _OSDVORAK:
             rgblight_setrgb_at(RGB_OFF, 0);
             break;
-        case _DVORAK:
+        case _KEYBDVORAK:
             // pale orange
             rgblight_setrgb_at(0x10, 0x08, 0x00, 0);
             break;

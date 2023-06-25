@@ -8,16 +8,14 @@ I want to use a Kyria for home & a Keyboardio Atreus for travel, as I've been us
 
 * add way in config layet to switch volume rotary enc to Swinsian volume (ctrl-alt-apple-I/D) 
 * add an actual QWERTY mode to allow someone to type QWERTY on a QWERTY OS (for demo purposes!)
-  * Rename "OS QWERTY" to "Native/Keyb Dvorak"
-  * options would be: "OS Dvorak", "Native Dvorak", "QWERTY", ...
-    * do we need "Hiragana"?
+  * do we need a "Hiragana" layer?
 
 ## Typing layer(s)
 
 We have two typing layers, both of which are intended for typing using the Dvorak layout:
 
-* "QWERTY" or "OS Dvorak" - a QWERTY-based layout intended for typing Dvorak with the operating system set to the Dvorak layout. 
-* "Dvorak" or "OS QWERTY" - a Dvorak-based layout intended for typing Dvorak with the operating system set to the QWERTY layout. This is useful for things like Japanese Hiragana input using the Dvorak layout. 
+* "OS Dvorak" - a QWERTY-based layout intended for typing Dvorak with the operating system set to the Dvorak layout. 
+* "Keyb Dvorak" - a Dvorak-based layout intended for typing Dvorak with the operating system set to the QWERTY layout. This is useful for things like Japanese Hiragana input using the Dvorak layout.
 
 Therefore both layouts are intended to ultimately produce the following characters in your editing software:
 
@@ -33,7 +31,7 @@ Therefore both layouts are intended to ultimately produce the following characte
                        `----------------------------------'  `----------------------------------'
 ```
 
-In the "QWERTY" or "OS Dvorak" layout, this is produced by the following layout (which doesn't make much sense for actual QWERTY use):
+In the "OS Dvorak" layout, this is produced by the following layout (which doesn't make much sense for actual QWERTY use):
 
 ```
 ,-------------------------------------------.                              ,-------------------------------------------.
