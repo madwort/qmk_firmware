@@ -4,7 +4,13 @@
 
 I want to use a Kyria for home & a Keyboardio Atreus for travel, as I've been using the Atreus for a while & I'm generally very happy with it, I just get a little finger pain after extended sessions. I already have a [layout for Atreus](https://github.com/madwort/atreus-layout/) that I'm happy with, so this layout attempts to port that layout to the Kyria and then extend it with the extra features (LEDs, encoders, etc).
 
-TODO: add way in config layet to switch volume rotary enc to Swinsian volume (ctrl-alt-apple-I/D) 
+## TODO
+
+* add way in config layet to switch volume rotary enc to Swinsian volume (ctrl-alt-apple-I/D) 
+* add an actual QWERTY mode to allow someone to type QWERTY on a QWERTY OS (for demo purposes!)
+  * Rename "OS QWERTY" to "Native/Keyb Dvorak"
+  * options would be: "OS Dvorak", "Native Dvorak", "QWERTY", ...
+    * do we need "Hiragana"?
 
 ## Typing layer(s)
 
