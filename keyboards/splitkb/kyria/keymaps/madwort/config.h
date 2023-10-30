@@ -44,9 +44,6 @@
 // measured at 80-90mA, with two screens & the built-in LED on the liatris
 #define USB_MAX_POWER_CONSUMPTION 100
 
-// Lets you roll mod-tap keys
-#define IGNORE_MOD_TAP_INTERRUPT
-
 #undef WS2812_DI_PIN
 #define WS2812_DI_PIN 25
 #undef RGBLED_NUM
